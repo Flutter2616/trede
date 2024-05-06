@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_sizer/flutter_sizer.dart';
+import 'package:sizer/sizer.dart';
 import 'package:moneytomoney/app_element/appcolor.dart';
 import 'package:moneytomoney/utils/on_boarding_widget.dart';
 import 'package:moneytomoney/utils/question_widget.dart';

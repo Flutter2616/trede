@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
-
-bool? isMobile;
+import 'package:flutter/material.dart';
 
 Color? bgColor;
 Color? fontColor;

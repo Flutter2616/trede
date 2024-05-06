@@ -7,7 +7,7 @@
 #include <memory>
 #include <string>
 
-// A class abstraction for a high DPI-aware Win32 Window. Intended to be
+// A class abstraction for a high spI-aware Win32 Window. Intended to be
 // inherited from by classes that wish to specialize with custom
 // rendering and input handling
 class Win32Window {
@@ -57,7 +57,7 @@ class Win32Window {
 
  protected:
   // Processes and route salient window messages for mouse handling,
-  // size change and DPI. Delegates handling of these to member overloads that
+  // size change and spI. Delegates handling of these to member overloads that
   // inheriting classes can handle.
   virtual LRESULT MessageHandler(HWND window,
                                  UINT const message,
@@ -76,10 +76,10 @@ class Win32Window {
 
   // OS callback called by message pump. Handles the WM_NCCREATE message which
   // is passed when the non-client area is being created and enables automatic
-  // non-client DPI scaling so that the non-client area automatically
-  // responds to changes in DPI. All other messages are handled by
+  // non-client spI scaling so that the non-client area automatically
+  // responds to changes in spI. All other messages are handled by
   // MessageHandler.
-  static LRESULT CALLBACK WndProc(HWND const window,
+  static LRESULT CALLBACK Wnsproc(HWND const window,
                                   UINT const message,
                                   WPARAM const wparam,
                                   LPARAM const lparam) noexcept;

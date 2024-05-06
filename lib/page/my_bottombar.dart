@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_sizer/flutter_sizer.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:moneytomoney/app_element/global_variable.dart';
+import 'package:moneytomoney/app_element/images_path.dart';
+import 'package:sizer/sizer.dart';
 import 'package:moneytomoney/app_element/appcolor.dart';
 import 'package:moneytomoney/page/wallet/wallet_screen.dart';
-import 'package:rolling_bottom_bar/rolling_bottom_bar.dart';
-import 'package:rolling_bottom_bar/rolling_bottom_bar_item.dart';
 
 import 'home_screen/home_screen.dart';
 
@@ -64,32 +65,38 @@ class _MyBottomState extends State<MyBottom> {
           HomeScreen(),
           Container(),
           WalletScreen(),
+          WalletScreen(),
         ],
       ),
       extendBody: true,
-      bottomNavigationBar: RollingBottomBar(
-        color: primary1,
-        itemColor: white.withOpacity(0.6),
-        controller: _pageController,
-        flat: true,
-        useActiveColorByDefault: false,
-        items: const [
-          RollingBottomBarItem(Icons.home, label: 'Home', activeColor: white),
-          RollingBottomBarItem(
-            Icons.question_answer,
-            label: 'Question',
-            activeColor: white,
-          ),
-          RollingBottomBarItem(Icons.wallet, label: 'Wallet', activeColor: white),
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: 0,
+        items: [
+          bottom_tab("PREDICTION", "match.svg", "match_unselect.svg"),
+          bottom_tab("OPINION", "opinion.svg", "opnion_unselect.svg"),
+          bottom_tab("PORTFOLIO", "portfolio.svg", "portfolio_unselect.svg"),
+          bottom_tab("REWARD", "reward.svg", "reward_unselect.svg"),
         ],
-        enableIconRotation: true,
-        onTap: (index) {
-          _pageController.animateToPage(
-            index,
-            duration: const Duration(milliseconds: 400),
-            curve: Curves.easeOut,
-          );
-        },
+        backgroundColor: bgColor,
+      ),
+    );
+  }
+
+  BottomNavigationBarItem bottom_tab(
+      String lable, String activeImage, String unactiveImage) {
+    return BottomNavigationBarItem(
+      label: "${lable}",
+      icon: SvgPicture.asset(
+        "${ImagePath.path.bottombarImage}${unactiveImage}",
+        height: 7.w,
+        width: 7.w,
+        fit: BoxFit.fill,
+      ),
+      activeIcon: SvgPicture.asset(
+        "${ImagePath.path.bottombarImage}${activeImage}",
+        height: 7.w,
+        width: 7.w,
+        fit: BoxFit.fill,
       ),
     );
   }

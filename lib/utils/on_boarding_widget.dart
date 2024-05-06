@@ -1,10 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_sizer/flutter_sizer.dart';
-import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-
-import '../app_element/appcolor.dart';
+import 'package:sizer/sizer.dart';
 
 class SliderGlobal extends StatefulWidget {
   // final List<feature.Data> dataList;
@@ -65,20 +61,8 @@ List images = [
           SizedBox(
             height: 10,
           ),
-          buildPage(),
         ],
       ),
     );
   }
-
-  Widget buildPage() => AnimatedSmoothIndicator(
-    activeIndex: _current,
-    count:images.length,
-    effect: ExpandingDotsEffect(
-        spacing: MediaQuery.of(context).size.width * 0.021,
-        dotWidth: MediaQuery.of(context).size.width * 0.05,
-        dotHeight: MediaQuery.of(context).size.height * 0.008,
-        dotColor: dimGray,
-        activeDotColor: primary1),
-  );
 }

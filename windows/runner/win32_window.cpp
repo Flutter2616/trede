@@ -29,7 +29,7 @@ constexpr const wchar_t kGetPreferredBrightnessRegValue[] = L"AppsUseLightTheme"
 // The number of Win32Window objects that currently exist.
 static int g_active_window_count = 0;
 
-using EnableNonClientDpiScaling = BOOL __stdcall(HWND hwnd);
+using EnableNonClientspiScaling = BOOL __stdcall(HWND hwnd);
 
 // Scale helper to convert logical scaler values to physical using passed in
 // scale factor
@@ -37,18 +37,18 @@ int Scale(int source, double scale_factor) {
   return static_cast<int>(source * scale_factor);
 }
 
-// Dynamically loads the |EnableNonClientDpiScaling| from the User32 module.
+// Dynamically loads the |EnableNonClientspiScaling| from the User32 module.
 // This API is only needed for PerMonitor V1 awareness mode.
-void EnableFullDpiSupportIfAvailable(HWND hwnd) {
+void EnableFullspiSupportIfAvailable(HWND hwnd) {
   HMODULE user32_module = LoadLibraryA("User32.dll");
   if (!user32_module) {
     return;
   }
-  auto enable_non_client_dpi_scaling =
-      reinterpret_cast<EnableNonClientDpiScaling*>(
-          GetProcAddress(user32_module, "EnableNonClientDpiScaling"));
-  if (enable_non_client_dpi_scaling != nullptr) {
-    enable_non_client_dpi_scaling(hwnd);
+  auto enable_non_client_spi_scaling =
+      reinterpret_cast<EnableNonClientspiScaling*>(
+          GetProcAddress(user32_module, "EnableNonClientspiScaling"));
+  if (enable_non_client_spi_scaling != nullptr) {
+    enable_non_client_spi_scaling(hwnd);
   }
   FreeLibrary(user32_module);
 }
@@ -99,7 +99,7 @@ const wchar_t* WindowClassRegistrar::GetWindowClass() {
         LoadIcon(window_class.hInstance, MAKEINTRESOURCE(IDI_APP_ICON));
     window_class.hbrBackground = 0;
     window_class.lpszMenuName = nullptr;
-    window_class.lpfnWndProc = Win32Window::WndProc;
+    window_class.lpfnWnsproc = Win32Window::Wnsproc;
     RegisterClass(&window_class);
     class_registered_ = true;
   }
@@ -131,8 +131,8 @@ bool Win32Window::Create(const std::wstring& title,
   const POINT target_point = {static_cast<LONG>(origin.x),
                               static_cast<LONG>(origin.y)};
   HMONITOR monitor = MonitorFromPoint(target_point, MONITOR_DEFAULTTONEAREST);
-  UINT dpi = FlutterDesktopGetDpiForMonitor(monitor);
-  double scale_factor = dpi / 96.0;
+  UINT spi = FlutterDesktopGetspiForMonitor(monitor);
+  double scale_factor = spi / 96.0;
 
   HWND window = CreateWindow(
       window_class, title.c_str(), WS_OVERLAPPEDWINDOW,
@@ -154,7 +154,7 @@ bool Win32Window::Show() {
 }
 
 // static
-LRESULT CALLBACK Win32Window::WndProc(HWND const window,
+LRESULT CALLBACK Win32Window::Wnsproc(HWND const window,
                                       UINT const message,
                                       WPARAM const wparam,
                                       LPARAM const lparam) noexcept {
@@ -164,7 +164,7 @@ LRESULT CALLBACK Win32Window::WndProc(HWND const window,
                      reinterpret_cast<LONG_PTR>(window_struct->lpCreateParams));
 
     auto that = static_cast<Win32Window*>(window_struct->lpCreateParams);
-    EnableFullDpiSupportIfAvailable(window);
+    EnableFullspiSupportIfAvailable(window);
     that->window_handle_ = window;
   } else if (Win32Window* that = GetThisFromHandle(window)) {
     return that->MessageHandler(window, message, wparam, lparam);
@@ -187,7 +187,7 @@ Win32Window::MessageHandler(HWND hwnd,
       }
       return 0;
 
-    case WM_DPICHANGED: {
+    case WM_spICHANGED: {
       auto newRectSize = reinterpret_cast<RECT*>(lparam);
       LONG newWidth = newRectSize->right - newRectSize->left;
       LONG newHeight = newRectSize->bottom - newRectSize->top;
