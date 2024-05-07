@@ -45,10 +45,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                         "https://img.etimg.com/thumb/width-1200,height-900,imgsize-1157704,resizemode-75,msid-94321543/news/sports/new-cricket-rules-saliva-ban-made-permanent-icc-announces-a-slew-of-changes-to-playing-conditions.jpg"),fit: BoxFit.fill),
                                 borderRadius: BorderRadius.circular(10)),
                           ),
-                          Text(
-                            "Cricket",
-                            style: titleMedium,
-                          ),
+                          // Text(
+                          //   "Cricket",
+                          //   style: titleMedium,
+                          // ),
                         ],
                       ),
                     );
